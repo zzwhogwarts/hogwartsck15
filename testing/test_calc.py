@@ -16,14 +16,13 @@ class TestCalc:
         print("计算结束")
 
     @pytest.mark.parametrize('a,b,expect',
-                             [[1, 1, 2], [100, 100, 200], [0.1, 0.1, 0.2], [-1, -1, -2], [1, 0, 1], [500, 1, 501]
-                                 , [2, 800, 802], [0.2, 1, 1.2], [2, 0.3, 2.3], [-2, 1, -1], [2, -3, -1]
-                                 , [-1.2, 1, -0.2], [2, -4.2, -2.2], [1.2, 0, 1.2], [0, 2.7, 2.7], [-2, 0, -2]
+                             [[1, 1, 2], [100, 100, 200], [-1, -1, -2], [1, 0, 1], [500, 1, 501]
+                                 , [2, 800, 802], [-2, 1, -1], [2, -3, -1]
+                                 , [-2, 0, -2]
                                  , [0, -3, -3]],
-                             ids=['int_case', 'bignum_case', 'float_case', 'minus_case', 'zero_case', 'bignum_int_case'
-                                 , 'int_bignum_case', 'float_int_case', 'int_float_case', 'minus_int_case',
-                                  'int_minus_case'
-                                 , 'minusfloat_int_case', 'int_minusfloat_case', 'float_zero_case', 'zero_float_case',
+                             ids=['int_case', 'bignum_case', 'minus_case', 'zero_case', 'bignum_int_case'
+                                 , 'int_bignum_case', 'minus_int_case',
+                                  'int_minus_case',
                                   'minus_zero_case', 'zero_minus_case'
                                   ]
                              )
@@ -31,6 +30,19 @@ class TestCalc:
         # calc = Calculator()
         result = self.calc.add(a, b)
         assert result == expect
+
+    @pytest.mark.parametrize('a,b,expect',
+                             [[0.1, 0.1, 0.2], [0.2, 1, 1.2], [2, 0.3, 2.3], [-1.2, 1, -0.2]
+                                 , [2, -4.2, -2.2], [1.2, 0, 1.2], [0, 2.7, 2.7]
+                              ],
+                             ids=['float_case', 'float_int_case', 'int_float_case'
+                                 , 'minusfloat_int_case', 'int_minusfloat_case', 'float_zero_case', 'zero_float_case'
+                                  ]
+                             )
+    def test_add_float(self, a, b, expect):
+        # calc = Calculator()
+        result = self.calc.add(a, b)
+        assert round(result, 2) == expect
 
     # def test_add1(self):
     #     # calc = Calculator()
